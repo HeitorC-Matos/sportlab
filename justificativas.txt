@@ -1,0 +1,47 @@
+SPORTLAB — JUSTIFICATIVAS DO PROJETO
+
+1. IDEIA DO TRABALHO
+
+A pergunta do projeto é: quem mais participa da construção das jogadas e de onde surgem as melhores chances de gol em uma partida? A ideia foi juntar estatísticas e imagens do campo no mesmo lugar para facilitar a comparação entre os dois times e entre os jogadores. A base escolhida foi a StatsBomb Open Data, pois tem eventos reais de partidas que podem ser acessados pelo Python com a StatsBombPy. A base é histórica e só inclui os campeonatos e jogos disponibilizados publicamente.
+
+2. POR QUE USEI O STREAMLIT
+
+Escolhi o Streamlit porque dá para criar um dashboard em Python sem precisar montar um site separado em HTML, CSS e JavaScript. Ele já oferece seletores, botões, indicadores, tabelas e gráficos, o que facilita criar um trabalho interativo no tempo disponível.
+
+O Streamlit funciona executando um script Python. Quando o usuário muda um filtro, o programa é executado de novo e atualiza os resultados. Os valores dos widgets podem ficar no Session State, enquanto o cache evita baixar os mesmos dados a cada atualização. Neste projeto, o app.py monta a interface, o src/dados.py trabalha com os dados e o src/graficos.py faz os gráficos. Essa divisão deixa o código mais organizado.
+
+Também pesquisei outros frameworks. O Dash permite um controle maior do layout e dos callbacks, mas precisaria de mais configuração. O Panel tem boas opções para aplicações de análise e integração com diferentes bibliotecas, mas eu teria que aprender mais detalhes para montar os componentes. O Voilà transforma notebooks Jupyter em aplicações, o que seria útil para apresentar uma análise já pronta, mas não era a estrutura que eu queria para um painel com vários filtros e páginas. Para este projeto, o Streamlit foi a escolha mais simples.
+
+3. AMBIENTE E PRIMEIRO TESTE
+
+O projeto foi organizado para ser aberto no VS Code, com ambiente virtual criado pelo venv. O ambiente virtual evita misturar as bibliotecas do trabalho com as de outros projetos. As dependências estão no requirements.txt e podem ser instaladas pelo pip. O arquivo exemplo_inicial.py contém uma aplicação Hello World simples para conferir se a interface abre. O README explica como executar primeiro o comando streamlit hello, depois o exemplo e, por fim, o dashboard. Esses comandos precisam ser executados no computador onde o trabalho será apresentado; a inclusão das instruções não é uma prova de que já foram executados nesse computador.
+
+4. APRESENTAÇÃO DOS DADOS
+
+Usei título, cabeçalhos, subtítulos, textos e legendas para separar as análises. O Markdown foi usado para organizar os textos e personalizar a identidade visual do SportLab. As tabelas mostram os dados de partidas e jogadores, e os indicadores numéricos destacam passes, finalizações, gols e conversão. A fórmula da conversão aparece em LaTeX junto aos indicadores, e um trecho pequeno do cálculo aparece formatado como código, sem criar uma aula separada do projeto.
+
+O Pandas organiza os eventos em DataFrames, permite filtrar por minuto, time e jogador e calcula os resumos. Usei st.dataframe nas tabelas detalhadas e st.table no ranking curto. O st.write apresenta textos e também DataFrames. Em Eventos, o st.json mostra os metadados de um lance selecionado. Há ainda um texto automático com a quantidade de eventos selecionados e uma tabela com a evolução dos passes usando a escrita simplificada do Streamlit, chamada Magic. Usei emojis e cores ligadas ao futebol para deixar a apresentação mais clara.
+
+5. POR QUE ESCOLHI ESSES GRÁFICOS
+
+As tabelas são úteis para conferir números exatos, mas os gráficos facilitam enxergar diferenças que não ficam tão claras apenas com valores. O mapa de passes mostra de onde saem as jogadas e onde elas terminam. O mapa de calor indica as regiões que concentram passes. O mapa de chutes coloca as finalizações no campo e usa o tamanho do ponto para indicar o xG. Esses gráficos ajudam a observar o padrão da partida sem afirmar que um gráfico sozinho explica o resultado do jogo.
+
+Usei o mplsoccer para desenhar o campo e o Matplotlib e Seaborn para os gráficos de jogadores. O gráfico nativo do Streamlit mostra a quantidade de passes por intervalo de 15 minutos. O Altair mostra a participação dos principais jogadores ao longo desses intervalos. O Plotly permite aproximar os mapas e consultar os lances com o mouse. Os subplots do Plotly colocam passes, finalizações e xG lado a lado para facilitar a comparação. O gráfico de rosca resume os resultados das finalizações.
+
+O PyDeck mostra os locais de origem dos passes em uma visão de cima do campo, usando coordenadas da StatsBomb. Como esses pontos não têm latitude e longitude, foi usada uma visão cartesiana, sem mapa geográfico. Assim, o gráfico representa a posição no gramado e não inventa localizações reais de estádios.
+
+6. INTERATIVIDADE E ORGANIZAÇÃO
+
+A barra lateral reúne os seletores de campeonato, temporada, partida, time e jogador. O formulário aplica o intervalo de minutos e outros ajustes. Os controles incluem selectbox, radio button, checkbox, slider, campo numérico e botões. A exibição dos gráficos depende dos eventos existentes e das opções marcadas; quando não há dados, aparece uma mensagem no lugar do gráfico.
+
+Os botões de download permitem salvar os eventos filtrados em CSV. O upload permite carregar um CSV com eventos da mesma partida, principalmente um arquivo exportado do próprio SportLab. Ele foi incluído para testar uma fonte externa sem substituir a análise principal com os dados reais da API.
+
+O cache reduz consultas repetidas à StatsBomb. O Session State mantém as escolhas na navegação entre as cinco páginas. Usei a barra lateral, colunas, abas, containers e expanders para distribuir as informações. O tema escuro, as cores verde e amarelo e os cartões personalizados ajudam a destacar os indicadores. Os cartões usam um componente da biblioteca streamlit-extras.
+
+7. ORGANIZAÇÃO DO CÓDIGO E GIT
+
+Os arquivos foram separados por função e o requirements.txt reúne as bibliotecas necessárias. O .gitignore evita enviar o ambiente virtual, arquivos temporários e caches. O Git serve para registrar versões do código no computador, com commits. O GitHub é o repositório remoto usado para guardar e sincronizar essas versões. Primeiro o projeto deve funcionar localmente; a configuração do Git, a criação do repositório, os commits e a sincronização serão feitos depois.
+
+8. PUBLICAÇÃO
+
+O aplicativo pode ser publicado no Streamlit Community Cloud depois que estiver no GitHub. A publicação, o link público e a verificação das funcionalidades no ambiente online são etapas futuras. Ainda não considero essa rubrica concluída, pois não existe um link publicado e testado. A verificação final também depende de executar a aplicação localmente com a internet ativa para consultar a StatsBomb.
